@@ -23,9 +23,17 @@ def Salvar(lista_de_contatos, nome, telefone, email):
     return
 
 def visualizar_lista(lista_de_contatos):
+    print("""
+    +----------------------------------------------------------+
+    |                     LISTA DE CONTATOS                    |
+    +----------------------------------------------------------+
+    """)
     for indice, contato in enumerate(lista_de_contatos, start=1):
         favoritado = "✓" if contato ["favoritado"] else " "
-        print(f"{indice}. [{favoritado}] {contato['nome_contato']} ({contato['numero_telefone']})")
+        largura_nome = 25
+        largura_telefone = 14
+        print(f"    | {indice:>2}. [{favoritado}] {contato['nome_contato']:<{largura_nome}} Número: {contato['numero_telefone']:<{largura_telefone}} |")
+    print("    +----------------------------------------------------------+")
     return
 
 def editar(lista_de_contatos, indice_alteraçao, opcao_de_troca):
@@ -41,6 +49,34 @@ def editar(lista_de_contatos, indice_alteraçao, opcao_de_troca):
         elif opcao_de_troca == 3:
             novo_email = input("Qual será o novo e-mail?: ")
             lista_de_contatos[indice_ajustado]['endereço_email'] = novo_email
+        else:
+            print("Digite um valor válido")
+    return
+
+def favoritar(lista_de_contatos, indice_alteracao):
+    indice_ajustado = indice_alteracao - 1
+
+    if indice_ajustado >= 0 and indice_ajustado <= len(lista_de_contatos):
+        if lista_de_contatos[indice_ajustado]['favoritado'] == False:
+            lista_de_contatos[indice_ajustado]["favoritado"] = True
+        else:
+            lista_de_contatos[indice_ajustado]["favoritado"] = False
+    return
+
+def ver_contatos_favoritos(lista_de_contatos):
+    for indice, contato_favorito in enumerate(lista_de_contatos,start=1):
+        if contato_favorito ['favoritado'] == True:
+            favoritado = "✓" if contato_favorito ["favoritado"] == True else " "
+            print(f"{indice}. [{favoritado}] {contato_favorito['nome_contato']} ({contato_favorito['numero_telefone']})")
+        else:
+            continue
+    return
+
+def deletar_contato(lista_de_contatos, indice_alteracao):
+    indice_ajustado = indice_alteracao - 1
+    if indice_ajustado >= 0 and indice_ajustado <= len(lista_de_contatos):
+        contato_removido = lista_de_contatos.pop(indice_ajustado)
+        print(f"O contato {contato_removido}, foi removido da sua lista!")
     return
 
 
@@ -72,12 +108,15 @@ while True:
         editar(lista_de_contatos, indice_alteraçao, opcao_de_troca)
         visualizar_lista(lista_de_contatos)
     elif escolha == 3:
-        print("Você está deletando")
+        visualizar_lista(lista_de_contatos)
+        indice_alteracao = int(input("Qual contato você deseja remover da sua lista?"))
+        deletar_contato(lista_de_contatos, indice_alteracao)
         visualizar_lista(lista_de_contatos)
     elif escolha == 4:
-        print("Você está favoritando")
         visualizar_lista(lista_de_contatos)
+        indice_alteracao = int(input("\nQual contato deseja favoritar/desfavoritar?: "))
+        favoritar(lista_de_contatos, indice_alteracao)
+        ver_contatos_favoritos(lista_de_contatos)
+        #visualizar_lista(lista_de_contatos)
     elif escolha == 0:
         break
-
-visualizar_lista(lista_de_contatos)
