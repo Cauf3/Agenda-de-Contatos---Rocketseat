@@ -34,5 +34,3 @@ O objetivo do desafio era desenvolver uma agenda com as seguintes funcionalidade
     ```
 
 ---
-
-Feito com 💜 por Rocketseat 🤘
