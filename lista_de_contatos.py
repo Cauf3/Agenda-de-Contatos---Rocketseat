@@ -64,12 +64,20 @@ def favoritar(lista_de_contatos, indice_alteracao):
     return
 
 def ver_contatos_favoritos(lista_de_contatos):
+    print("""
+    +----------------------------------------------------------+
+    |                LISTA DE CONTATOS FAVORITOS               |
+    +----------------------------------------------------------+
+    """)
     for indice, contato_favorito in enumerate(lista_de_contatos,start=1):
         if contato_favorito ['favoritado'] == True:
             favoritado = "✓" if contato_favorito ["favoritado"] == True else " "
-            print(f"{indice}. [{favoritado}] {contato_favorito['nome_contato']} ({contato_favorito['numero_telefone']})")
+            largura_nome = 25
+            largura_telefone = 14
+            print(f"    | {indice:>2}. [{favoritado}] {contato_favorito['nome_contato']:<{largura_nome}} Número: {contato_favorito['numero_telefone']:<{largura_telefone}} |")
         else:
             continue
+    print("    +----------------------------------------------------------+")
     return
 
 def deletar_contato(lista_de_contatos, indice_alteracao):
@@ -86,15 +94,19 @@ while True:
     escolha = int(input("Escolha uma opção: "))
 
     if escolha == 1:
-        print("\nNovo contato\n")
-        nome = input("Informe o nome do contato: ")
-        telefone = int(input("Informe o número do contato: "))
-        email = input("informe o e-mail do seu contato: ")
+        print("""
+        +-------------------------------------+
+        |            NOVO CONTATO             |
+        +-------------------------------------+
+        """)
+        nome = input(">>> Digite o nome do contato: ")
+        telefone = int(input("\n>>> Digite o telefone (Ex: 11987654321): "))
+        email = input("\n>>> Digite o e-mail (Ex: nome@email.com): ")
         Salvar(lista_de_contatos, nome, telefone, email)
         visualizar_lista(lista_de_contatos)
     elif escolha == 2:
         visualizar_lista(lista_de_contatos)
-        indice_alteraçao = int(input("\nEssa é a sua lista de contatos, qual deseja alterar?: "))
+        indice_alteraçao = int(input("\n>>> Qual contato deseja alterar? (Digite o número do indice): "))
         print("""
         +-------------------------------------+
         |           MENU DE OPÇÕES            |
@@ -104,17 +116,17 @@ while True:
         | 3. E-mail                           |
         +-------------------------------------+
         """)
-        opcao_de_troca = int(input("Qual informação deseja alterar?: "))
+        opcao_de_troca = int(input(">>> Qual informação deseja alterar?: "))
         editar(lista_de_contatos, indice_alteraçao, opcao_de_troca)
         visualizar_lista(lista_de_contatos)
     elif escolha == 3:
         visualizar_lista(lista_de_contatos)
-        indice_alteracao = int(input("Qual contato você deseja remover da sua lista?"))
+        indice_alteracao = int(input(">>> Qual contato deseja remover? (Digite o número): "))
         deletar_contato(lista_de_contatos, indice_alteracao)
         visualizar_lista(lista_de_contatos)
     elif escolha == 4:
         visualizar_lista(lista_de_contatos)
-        indice_alteracao = int(input("\nQual contato deseja favoritar/desfavoritar?: "))
+        indice_alteracao = int(input("\n>>> Qual contato (favoritar/desfavoritar)? (Digite o número): "))
         favoritar(lista_de_contatos, indice_alteracao)
         ver_contatos_favoritos(lista_de_contatos)
         #visualizar_lista(lista_de_contatos)
